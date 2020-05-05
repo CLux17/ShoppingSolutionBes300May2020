@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+    sql:
+        image: shopping-sql:latest
+        # ports:
+            # - 1433:1433
+        networks:
+            - my-network
+    api:
+        image: shopping:latest
+        environment: 
+            - ConnectionStrings__shopping=Server=sql;Database=shopping;User Id=SA;Password=Tokyo_Joe
+        ports:
+            - 8080:80
+        networks:
+            - my-network
+        depends_on: 
+            - sql
+networks:
+    my-network:
+        driver: bridge
